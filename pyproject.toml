@@ -1,0 +1,58 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "libbacnet"
+version = "0.1.0"
+description = "A sans-IO BACnet/IP client library written in Rust with a Python asyncio interface."
+requires-python = ">=3.12"
+authors = [{ name = "Cheong Yu Jia", email = "yujia21.writes@gmail.com" }]
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: 3.12",
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+
+[tool.maturin]
+features = ["pyo3/abi3-py312"]
+python-source = "python"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "PLR",     # pylint refactor
+    "RUF",     # ruff specific
+    "S",       # bandit (security - not relevant for lib)
+    "SLF",     # self-private
+    "D203",    # one-blank-line-before-class (conflicts with D211)
+    "D212",    # multi-line-summary-first-line (conflicts with D213)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "D104"]
+"tests/*" = ["D", "ANN"]
+
+[tool.pytest.ini_options]
+
+[tool.coverage.run]
+source = ["python/libbacnet"]
+
+[tool.coverage.report]
+show_missing = true
+
+[dependency-groups]
+dev = [
+    "anyio>=4.13.0",
+    "bacpypes3>=0.0.106",
+    "maturin[patchelf]>=1.13.1",
+    "pytest>=9.0.3",
+    "pytest-anyio>=0.0.0",
+    "ruff>=0.15.11",
+    "ty>=0.0.31",
+]
