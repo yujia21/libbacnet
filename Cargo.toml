@@ -1,0 +1,11 @@
+[package]
+name = "libbacnet"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pyo3 = { version = "0.20", features = ["abi3-py312", "extension-module"] }
+
+[lib]
+name = "libbacnet"
+crate-type = ["cdylib", "rlib"]
